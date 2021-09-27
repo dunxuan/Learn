@@ -1,12 +1,12 @@
 #include <iostream>
 #include <vector>
 
-#define LENGTH 8
+#define LENGTH 1
 
 using namespace std;
 
 void merge(int A[], int p, int q, int r);
-void mergeSoft(int A[], int p, int r);
+void mergeSort(int A[], int p, int r);
 int num[LENGTH];
 
 int main(void)
@@ -15,20 +15,21 @@ int main(void)
         cin >> num[i];
     }
 
-    mergeSoft(num, 0, LENGTH - 1);
+    mergeSort(num, 0, LENGTH);
 
     for (int i = 0; i < LENGTH; i++) {
         cout << num[i] << '\t';
     }
+
     return 0;
 }
 
-void mergeSoft(int A[], int p, int r)
+void mergeSort(int A[], int p, int r)
 {
     if (p < r)  {
         int q = (p + r) / 2;
-        mergeSoft(A, p, q);
-        mergeSoft(A, q + 1, r);
+        mergeSort(A, p, q);
+        mergeSort(A, q + 1, r);
         merge(A, p, q, r);
     }
 }
