@@ -8,6 +8,7 @@ struct TrailAndHealthListNode * TrailAndHealthInfoListCreate(string Time, string
 struct PersonListNode * InputPersonInfo(void);
 struct PersonListNode * InputTrailAndHealthInfo(PersonListNode * q);
 struct PersonListNode * SearchTrailAndHealthInfo(PersonListNode * q);
+struct PersonListNode * SearchTemperatureAbnormal(PersonListNode * q);
 
 //性别
 enum Sex {
@@ -33,11 +34,12 @@ struct PersonInfo {
 	string Address;//家庭住址
 	TrailAndHealthListNode * P_TrailAndHealthListNode;
 };
-//链表
+//链表：人员信息
 struct PersonListNode {
 	PersonInfo P_PersonInfo;
 	PersonListNode * next;
 };
+//链表：轨迹和健康信息
 struct TrailAndHealthListNode {
 	TrailInfo P_TrailInfo;//轨迹信息：时间、地点
 	HealthInfo P_HealthInfo;//健康信息：时间、体温
@@ -58,7 +60,7 @@ int main(void)
 		switch (change) {
 		case 'i'://录入人员信息
 			p = InputPersonInfo();
-			if (p!=nullptr) {
+			if (p != nullptr) {
 				cout << "录入成功。" << endl;
 				if (DoesPersonInfoSave == false) {
 					DoesPersonInfoSave = true;
@@ -83,11 +85,16 @@ int main(void)
 			if (p != nullptr) {
 				cout << "查询完成。" << endl;
 			} else {
-				cout<< "查询失败。" << endl;
+				cout << "查询失败。" << endl;
 			}
 			break;
 		case 'e'://查询体温异常人员
-
+			p = SearchTemperatureAbnormal(q);
+			if (p != nullptr) {
+				cout << "查询完成。" << endl;
+			} else {
+				cout << "查询失败。" << endl;
+			}
 			break;
 		default:
 			continue;
@@ -172,7 +179,7 @@ struct PersonListNode * InputPersonInfo(void)
 	}
 	//将输入数据并入链表中
 	PersonListNode * q = PersonInfoListCreate(Name, ID, P_Sex, Age, Address);
-	if (q!=nullptr) {
+	if (q != nullptr) {
 		return q;
 	} else {
 		return nullptr;
@@ -261,5 +268,38 @@ struct PersonListNode * SearchTrailAndHealthInfo(PersonListNode * q)
 			}
 			return p;
 		}
+	}
+}
+
+//功能：查询体温异常人员
+//参数：判断有无人员可被查询
+//返回：(PersonListNode *) -> 查询成功，nullptr -> 查询失败
+struct PersonListNode * SearchTemperatureAbnormal(PersonListNode * q)
+{
+	if (q == nullptr) {
+		cout << "当前无人员可查询。" << endl;
+		return nullptr;
+	}
+
+	PersonListNode * p = head;
+	while (p != nullptr) {
+		TrailAndHealthListNode * r = p->P_PersonInfo.P_TrailAndHealthListNode;
+		while (r != nullptr) {
+			bool DoesPersonInfoOutput = false;
+			if (r->P_HealthInfo.Temperature > 37.3) {
+				if (DoesPersonInfoOutput == false) {
+					cout << "姓名：" << p->P_PersonInfo.Name << endl;
+					cout << "身份证号：" << p->P_PersonInfo.ID << endl;
+					cout << "性别：" << p->P_PersonInfo.P_Sex << endl;
+					cout << "年龄：" << p->P_PersonInfo.Age << endl;
+					cout << "家庭地址：" << p->P_PersonInfo.Address << endl;
+				}
+				cout << "时间：" << r->P_TrailInfo.Time << endl;
+				cout << "\t地点：" << r->P_TrailInfo.Place << endl;
+				cout << "\t体温：" << r->P_HealthInfo.Temperature << endl;
+			}
+			r = r->next;
+		}
+		p = p->next;
 	}
 }
