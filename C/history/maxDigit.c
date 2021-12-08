@@ -16,9 +16,6 @@ long cmp(int * x, int * y)
 
 char * fun(int * A, int N)
 {
-	if (N == 0) {
-		return '0';
-	}
 	qsort(A, N, sizeof(int), cmp);
 	if (A[0] == 0) {
 		char * ret = malloc(sizeof(char) * 2);
@@ -28,7 +25,7 @@ char * fun(int * A, int N)
 	char * ret = malloc(sizeof(char) * N * 5 + 1);
 	char * p = ret;
 	for (int i = 0; i < N; i++) {
-		sprintf(p, "%d", A[i]);
+		sprintf(p, "%d ", A[i]);
 		p += strlen(p);
 	}
 	return ret;
