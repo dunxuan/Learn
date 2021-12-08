@@ -49,7 +49,7 @@ void Swap(char * a, char * b)
 void SimpleSelectionSort(char * A[], int N)
 {
 
-	/*int i, j, k, max;
+	int i, j, k, max;
 
 	for(i = 0; i < N - 1; i++) {
 		max = i;
@@ -63,21 +63,21 @@ void SimpleSelectionSort(char * A[], int N)
 			}
 		}
 		Swap(A[i], A[max]);
-	}*/
+	}
 }
 char * fun(int * Digits, int count)
 {
 	char * Max_Digit = (char *)malloc(count * 5 + 1);
 	char * Str_Digits[200];
-	for(int i = 0; i < count * 5 + 1; i++) //³õÊ¼»¯×î´óÊýµÄ´æ·ÅÇø 
+	for(int i = 0; i < count * 5 + 1; i++) //åˆå§‹åŒ–æœ€å¤§æ•°çš„å­˜æ”¾åŒº 
 	{
 		Max_Digit[i] = 0;
 	}
-	for(int i = 0; i < 200; i++)//³õÊ¼»¯Ã¿¸öÊý×ª»»³É×Ö·û´®ºóµÄ´æ·ÅÇø 
+	for(int i = 0; i < 200; i++)//åˆå§‹åŒ–æ¯ä¸ªæ•°è½¬æ¢æˆå­—ç¬¦ä¸²åŽçš„å­˜æ”¾åŒº 
 	{
 		Str_Digits[i][5] = "";
 	}
-	for(int i = 0; i < count; i++)//Êý×Ö×ª×Ö·û´® 
+	for(int i = 0; i < count; i++)//æ•°å­—è½¬å­—ç¬¦ä¸² 
 	{
 		sprintf(Str_Digits[i], "%d", Digits[i]);
 	}
@@ -86,10 +86,10 @@ char * fun(int * Digits, int count)
 		strcpy(Max_Digit, Str_Digits[0]);
 		return Max_Digit;
 	}
-	SimpleSelectionSort(Str_Digits, count);//ÅÅÐò»ñµÃ×Ö·û´®µÄÓÅÏÈ¼¶ 
+	SimpleSelectionSort(Str_Digits, count);//æŽ’åºèŽ·å¾—å­—ç¬¦ä¸²çš„ä¼˜å…ˆçº§ 
 
 
-	for(int i = 0; i < count; i++)//×éºÏ 
+	for(int i = 0; i < count; i++)//ç»„åˆ 
 	{
 		strcat(Max_Digit, Str_Digits[i]);
 	}
