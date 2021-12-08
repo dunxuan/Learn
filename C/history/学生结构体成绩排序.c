@@ -1,11 +1,13 @@
-在这里给出函数被调用进行测试的例子。例如：
 #include <stdio.h>
-/struct stu {
+
+struct stu {
 	int num;
 	char name[20];
 	int score;
 };
+
 void fun(struct stu * p, int n);
+
 int main()
 {
 	struct stu a[20];
@@ -19,5 +21,16 @@ int main()
 		printf("%d %s %d\n", a[i].num, a[i].name, a[i].score);
 	return 0;
 }
-/* 请在这里填写答案 */
+//code
+#include <stdlib.h>
 
+int cmpfunc(const struct stu * a, const struct stu * b)
+{
+	return ((int)a->score) > ((int)b->score) ? -1 : 1;
+}
+
+void fun(struct stu * p, int n)
+{
+	qsort(p, n, sizeof(struct stu), cmpfunc);
+}
+//code

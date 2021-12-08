@@ -1,20 +1,6 @@
-long cmp(int * x, int * y);
-char * fun(int * A, int N);
-#include <stdio.h>
-#include <math.h>
-#include <string.h>
-
-int main(void)
-{
-	int a[5] = { 0 };
-	/*for (int i = 0; i < 5; i++) {
-		scanf("%d", &a[i]);
-	}*/
-	char * s = fun(a, 0);
-	printf(s);
-}
-
 #include <stdlib.h>
+
+long cmp(int * x, int * y);
 
 long cmp(int * x, int * y)
 {
@@ -30,8 +16,8 @@ long cmp(int * x, int * y)
 
 char * fun(int * A, int N)
 {
-	if (!N) {
-		return "\0";
+	if (N == 0) {
+		return '0';
 	}
 	qsort(A, N, sizeof(int), cmp);
 	if (A[0] == 0) {
@@ -46,4 +32,19 @@ char * fun(int * A, int N)
 		p += strlen(p);
 	}
 	return ret;
+}
+
+#include <stdio.h>
+
+int main(void)
+{
+	int i, n;
+	scanf("%d", &n);
+	srand(n);
+	int d[n];
+	if (n < 10)
+		for (i = 0; i < n; i++)
+			scanf("%d", d + i);
+	char * s = fun(d, n);
+	printf(s);
 }
