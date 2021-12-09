@@ -8,11 +8,14 @@ int main()
 	int Num = 0;
 	scanf("%d", &Num);
 	int Digits[Num];
-	srand((unsigned int)time(NULL));
 
+	/*srand((unsigned int)time(NULL));
 	for(int i = 0; i < Num; i++) {
 		Digits[i] = rand() % 100000;
 		printf("%d  ", Digits[i]);
+	}*/
+	for(int i = 0; i < Num; i++) {
+		scanf("%d", Digits + i);
 	}
 	char * s = fun(Digits, Num);
 
@@ -74,7 +77,7 @@ char * fun(int * Digits, int count)
 	}
 	for(int i = 0; i < 200; i++)//初始化每个数转换成字符串后的存放区 
 	{
-		Str_Digits[i][5] = "";
+		Str_Digits[i] = "";
 	}
 	for(int i = 0; i < count; i++)//数字转字符串 
 	{
