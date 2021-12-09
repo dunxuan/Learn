@@ -48,8 +48,7 @@ void Swap(char * a, char * b)
 
 void SimpleSelectionSort(char * A[], int N)
 {
-
-	/*int i, j, k, max;
+	int i, j, k, max;
 
 	for(i = 0; i < N - 1; i++) {
 		max = i;
@@ -63,7 +62,7 @@ void SimpleSelectionSort(char * A[], int N)
 			}
 		}
 		Swap(A[i], A[max]);
-	}*/
+	}
 }
 char * fun(int * Digits, int count)
 {
