@@ -17,19 +17,15 @@ long cmp(int * x, int * y)
 char * fun(int * A, int N)
 {
 	qsort(A, N, sizeof(int), cmp);
-	if (A[0] == 0) {
-		char * ret = malloc(sizeof(char) * 2);
-		ret[0] = '0', ret[1] = '\0';
-		return "0";
-	}
 	char * ret = malloc(sizeof(char) * N * 5 + 1);
 	char * p = ret;
 	for (int i = 0; i < N; i++) {
-		printf("%d ", A[i]);//temp
 		sprintf(p, "%d", A[i]);
 		p += strlen(p);
 	}
-	printf("\n");//temp
+	if(A[0] == 0) {
+		strcpy(ret, "0");
+	}
 	return ret;
 }
 
