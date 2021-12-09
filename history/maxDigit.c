@@ -25,9 +25,11 @@ char * fun(int * A, int N)
 	char * ret = malloc(sizeof(char) * N * 5 + 1);
 	char * p = ret;
 	for (int i = 0; i < N; i++) {
-		sprintf(p, "%d ", A[i]);
+		printf("%d ", A[i]);//temp
+		sprintf(p, "%d", A[i]);
 		p += strlen(p);
 	}
+	printf("\n");//temp
 	return ret;
 }
 
