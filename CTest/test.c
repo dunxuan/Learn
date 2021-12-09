@@ -66,7 +66,7 @@ int main()
 //		Swap(A[i], A[max]);
 //	}
 //}
-char * myitoa(int a)
+char * myitoa(int a, char * str)
 {
 	int length = 0;
 	int i = 0;
@@ -76,35 +76,42 @@ char * myitoa(int a)
 		length++;
 		temp /= 10;
 	}
-	char * str = malloc(sizeof(char) * length + 1);
 	sprintf(str, "%d", a);
 	return str;
 }
-int cmp(char * a, char * b)
+int cmp(char a[], char b[])
 {
 	int maxLength = strlen(a) < strlen(b) ? strlen(b) : strlen(a);
 	char *aTemp = malloc(sizeof(char) * maxLength + 1);
 	char *bTemp = malloc(sizeof(char) * maxLength + 1);
 	char aFirst[1] = { a[0] };
 	char bFirst[1] = { b[0] };
+	sprintf(aTemp,"%s",a);
+	sprintf(bTemp,"%s",b);
 	if(strlen(a) < strlen(b)) {
 		for(int i = strlen(a); i < maxLength; i++) {
-
+			strcat(aTemp,aFirst);
 		}
-	}
+	} else {
+		for(int i = strlen(b); i < maxLength; i++) {
+			strcat(bTemp,bFirst);
+			}
+		}
 	return strcmp(aTemp, bTemp) < 0 ? 1 : -1;
 }
 char * fun(int * Digits, int count)
 {
+	if(count == 0)
+		return "0";
 	char * Max_Digit = (char *)malloc(sizeof(char) * count * 5 + 1);
-	char * Str_Digits[count];
+	char Str_Digits[count][5];
 	for(int i = 0; i < count * 5 + 1; i++) //初始化最大数的存放区 
 	{
 		Max_Digit[i] = 0;
 	}
 	for(int i = 0; i < count; i++)//数字转字符串
 	{
-		Str_Digits[i] = myitoa(Digits[i]);
+		myitoa(Digits[i],Str_Digits[i]);
 	}
 
 	if(count == 1) {
