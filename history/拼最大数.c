@@ -80,7 +80,7 @@ char * fun(int * Digits, int count)
 		strcat(Max_Digit, Str_Digits[i]);
 	}
 	if(Max_Digit[0] == '0') {
-		return "0";
+		strcpy(Max_Digit, "0");
 	}
 	return Max_Digit;
 }
