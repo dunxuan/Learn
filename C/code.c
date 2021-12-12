@@ -1,89 +1,66 @@
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
-#include <time.h>
+#include <stdbool.h>
 
-char * fun(int * Digits, int count);
-char * myitoa(int a, char * str);
-int cmp(char a[], char b[]);
+int dateDifferent(int year, int month, int day);
+int toDay(const char *dateStr);
+int daysBetweenDates(char *date1, char *date2);
 
-int main()
+int main(void)
 {
-	int Num = 0;
-	scanf("%d", &Num);
-	int Digits[Num];
-	srand((unsigned)time(NULL));
-	for(int i = 0; i < Num; i++) {
-		Digits[i] = rand() % 100000;
-	}
-	char * s = fun(Digits, Num);
+	int year = 1921;
+	int month = 7;
+	int day = 23;
+	char *date = malloc(sizeof(char) * 10 + 1);
+	int dayInMonth[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+	int dateDifferent_returnValue = 0;
+	int daysBetweenDates_returnValue = 0;
+	while(1) {
+		sprintf(date, "%4d-%02d-%02d", year, month, day);
+		//if((dateDifferent_returnValue = dateDifferent(year, month, day)) != (daysBetweenDates_returnValue = daysBetweenDates(partyBuildingdate, date))) {
+		printf("%s:\n\t-dateDifferent:%d\n\t-daysBetweenDates:%d\n", date, dateDifferent(year, month, day), daysBetweenDates("1921-07-23", date));
+		//}
+		day++;
+		if((!(year / 4.0) && (year / 100.0) || !(year / 400.0) && month == 2 && day == 29)) {
+			continue;
+		}
+		if(day > dayInMonth[month - 1]) {
 
-	printf("%s", s);
+			day = 1;
+			month++;
+			if(month > 12) {
+				month = 1;
+				year++;
+			}
+		}
+		if(year == 1921 && month == 8 && day == 31) {
+			break;
+		}
+	}
 
 	return 0;
 }
-
-char * myitoa(int a, char * str)
+//1
+int toDay(const char *dateStr)
 {
-	int length = 0;
-	int i = 0;
-	char c;
-	int temp = a;
-	while(temp) {
-		length++;
-		temp /= 10;
-	}
-	sprintf(str, "%d", a);
-	return str;
+	int year, month, day;
+	sscanf(dateStr, "%d-%d-%d", &year, &month, &day);
+	if(month <= 2) {
+		year--;
+		month += 10;
+	} else month -= 2;
+	return 365 * year + year / 4 - year / 100 + year / 400 + 30 * month + (3 * month - 1) / 5 + day /* -584418 */;
 }
-int cmp(char a[], char b[])
+int daysBetweenDates(char *date1, char *date2)
 {
-	int maxLength = strlen(a) < strlen(b) ? strlen(b) : strlen(a);
-	char * aTemp = malloc(sizeof(char) * maxLength + 1);
-	char * bTemp = malloc(sizeof(char) * maxLength + 1);
-	char aFirst[1] = { a[0] };
-	char bFirst[1] = { b[0] };
-	sprintf(aTemp, "%s", a);
-	sprintf(bTemp, "%s", b);
-	if(strlen(a) < strlen(b)) {
-		for(int i = strlen(a); i < maxLength; i++) {
-			strcat(aTemp, aFirst);
-		}
-	} else {
-		for(int i = strlen(b); i < maxLength; i++) {
-			strcat(bTemp, bFirst);
-		}
-	}
-	return strcmp(aTemp, bTemp) < 0 ? 1 : -1;
+	return abs(toDay(date1) - toDay(date2));
 }
-char * fun(int * Digits, int count)
+//2
+int dateDifferent(int year, int month, int day)
 {
-	char * Max_Digit = (char *)malloc(sizeof(char) * count * 5 + 1);
-	char Str_Digits[count][5];
-	for(int i = 0; i < count * 5 + 1; i++) //初始化最大数的存放区 
-	{
-		Max_Digit[i] = 0;
-	}
-	for(int i = 0; i < count; i++)//数字转字符串
-	{
-		myitoa(Digits[i], Str_Digits[i]);
-	}
-
-	if(count == 1) {
-		strcpy(Max_Digit, Str_Digits[0]);
-		return Max_Digit;
-	}
-	qsort(Str_Digits, count, sizeof(Str_Digits[0]), cmp);//排序获得字符串的优先级 
-	//
-
-	for(int i = 0; i < count; i++)//组合 
-	{
-		strcat(Max_Digit, Str_Digits[i]);
-	}
-	if(Max_Digit[0] == '0') {
-		return "0";
-	}
-	return Max_Digit;
+	if(month <= 2) {
+		year--;
+		month += 10;
+	} else month -= 2;
+	return 365 * year + year / 4 - year / 100 + year / 400 + 30 * month + (3 * month - 1) / 5 + day - 701805;
 }
-
-//双枢轴快速排序
