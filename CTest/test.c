@@ -1,4 +1,4 @@
-// ÊµÏÖË«ÊàÖáQuickSortµÄC³ÌĞò
+// å®ç°åŒæ¢è½´QuickSortçš„Cç¨‹åº
 #include <stdio.h>
 
 int partition(int *arr, int low, int high, int *lp);
@@ -13,7 +13,7 @@ void swap(int *a, int *b)
 void DualPivotQuickSort(int *arr, int low, int high)
 {
 	if(low < high) {
-		// lp±íÊ¾×óÊàÖá£¬rp±íÊ¾ÓÒÊàÖá¡£
+		// lpè¡¨ç¤ºå·¦æ¢è½´ï¼Œrpè¡¨ç¤ºå³æ¢è½´ã€‚
 		int lp, rp;
 		rp = partition(arr, low, high, &lp);
 		DualPivotQuickSort(arr, low, lp - 1);
@@ -26,18 +26,18 @@ int partition(int *arr, int low, int high, int *lp)
 {
   	if(arr[low] > arr[high])
 		swap(&arr[low], &arr[high]);
-	// pÊÇ×óÊà£¬qÊÇÓÒÊà¡£
+	// pæ˜¯å·¦æ¢ï¼Œqæ˜¯å³æ¢ã€‚
 	int j = low + 1;
 	int g = high - 1, k = low + 1, p = arr[low], q = arr[high];
 	while(k <= g) {
 
-		// Èç¹ûÔªËØĞ¡ÓÚ×óÊàÖá
+		// å¦‚æœå…ƒç´ å°äºå·¦æ¢è½´
 		if(arr[k] < p) {
 			swap(&arr[k], &arr[j]);
 			j++;
 		}
 
-		// Èç¹ûÔªËØ´óÓÚ»òµÈÓÚÓÒÊàÖá
+		// å¦‚æœå…ƒç´ å¤§äºæˆ–ç­‰äºå³æ¢è½´
 		else if(arr[k] >= q) {
 			while(arr[g] > q && k < g)
 				g--;
@@ -53,11 +53,11 @@ int partition(int *arr, int low, int high, int *lp)
 	j--;
 	g++;
 
-	// °ÑÊàÖá´øµ½ÊÊµ±µÄÎ»ÖÃ¡£
+	// æŠŠæ¢è½´å¸¦åˆ°é€‚å½“çš„ä½ç½®ã€‚
 	swap(&arr[low], &arr[j]);
 	swap(&arr[high], &arr[g]);
 
-	// ·µ»ØÊàÖáµÄË÷Òı¡£
+	// è¿”å›æ¢è½´çš„ç´¢å¼•ã€‚
 	*lp = j;
 
 	return g;

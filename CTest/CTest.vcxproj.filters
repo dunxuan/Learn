@@ -18,8 +18,5 @@
     <ClCompile Include="test.c">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="拼最大数test.c">
-      <Filter>源文件</Filter>
-    </ClCompile>
   </ItemGroup>
 </Project>
