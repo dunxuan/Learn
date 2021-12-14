@@ -1,76 +1,48 @@
-// 实现双枢轴QuickSort的C程序
 #include <stdio.h>
+#include <stdbool.h>
 
-int partition(int *arr, int low, int high, int *lp);
+bool judgment(int num);
+bool judgmentPrime(int num);
 
-void swap(int *a, int *b)
+int main(void)
 {
-	int temp = *a;
-	*a = *b;
-	*b = temp;
-}
+	int num = 0;
 
-void DualPivotQuickSort(int *arr, int low, int high)
-{
-	if(low < high) {
-		// lp表示左枢轴，rp表示右枢轴。
-		int lp, rp;
-		rp = partition(arr, low, high, &lp);
-		DualPivotQuickSort(arr, low, lp - 1);
-		DualPivotQuickSort(arr, lp + 1, rp - 1);
-		DualPivotQuickSort(arr, rp + 1, high);
-	}
-}
+	scanf("%d", &num);
 
-int partition(int *arr, int low, int high, int *lp)
-{
-  	if(arr[low] > arr[high])
-		swap(&arr[low], &arr[high]);
-	// p是左枢，q是右枢。
-	int j = low + 1;
-	int g = high - 1, k = low + 1, p = arr[low], q = arr[high];
-	while(k <= g) {
-
-		// 如果元素小于左枢轴
-		if(arr[k] < p) {
-			swap(&arr[k], &arr[j]);
-			j++;
+	while(num) {
+		if(judgment(num)) {
+			printf("%d\n", num);
 		}
-
-		// 如果元素大于或等于右枢轴
-		else if(arr[k] >= q) {
-			while(arr[g] > q && k < g)
-				g--;
-			swap(&arr[k], &arr[g]);
-			g--;
-			if(arr[k] < p) {
-				swap(&arr[k], &arr[j]);
-				j++;
-			}
-		}
-		k++;
+		scanf("%d", &num);
 	}
-	j--;
-	g++;
 
-	// 把枢轴带到适当的位置。
-	swap(&arr[low], &arr[j]);
-	swap(&arr[high], &arr[g]);
-
-	// 返回枢轴的索引。
-	*lp = j;
-
-	return g;
-}
-
-// Driver code
-int main()
-{
-	int arr[] = { 24, 8, 42, 75, 29, 77, 38, 57 };
-	DualPivotQuickSort(arr, 0, 7);
-	printf("Sorted array: ");
-	for(int i = 0; i < 8; i++)
-		printf("%d ", arr[i]);
-	printf("\n");
 	return 0;
+}
+
+bool judgment(int num)
+{
+	if(!judgmentPrime(num)) {
+		return false;
+	}
+	int sum = 0;
+	while(num) {
+		sum += num % 10;
+		num /= 10;
+	}
+	if(judgmentPrime(sum)) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+bool judgmentPrime(int num)
+{
+	for(int i = 2; i * i <= num; i++) {
+		if(!(num % i)) {
+			return false;
+		}
+	}
+	return true;
 }
