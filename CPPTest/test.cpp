@@ -9,10 +9,7 @@ int main(void)
 	cout << int(a) << '\n';
 	cout << a << '\n';
 
-	int *x[5];
-	int(*y)[5];
-
-	char *c = "a";
-	printf("%s\n", c);
-	printf("%d", int(*c));
+	char c = 'a';
+	printf("%c\n", c);
+	printf("%d", int(c));
 }
