@@ -1,82 +1,35 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 
-struct MaxNumSub {
-	int max;
-	int firstSubscript;
-	int lastSubscript;
-	struct MaxNumSub *next;
+struct stu {
+	int num;
+	char name[20];
+	int score;
 };
 
-struct MaxNumSub *maxSubArray(int *nums, int numsSize);
-struct MaxNumSub *newMaxSub(int maxAns, int subscript);
-void printMaxSub(int *nums);
+void fun(struct stu *p, int n);
+int cmp(struct stu *a, struct stu *b);
 
-int numsMax;
-struct MaxNumSub *head = NULL;
-
-int main(void)
+int main()
 {
-	int K = 0;
-
-	scanf("%d", &K);
-	int nums[K];
-	for(int i = 0; i < K; i++) {
-		scanf("%d", nums + i);
+	struct stu a[20];
+	int n, i;
+	scanf("%d", &n);
+	for(i = 0; i < n; i++) {
+		scanf("%d%s%d", &a[i].num, a[i].name, &a[i].score);
 	}
-
-	struct MaxNumSub *q = maxSubArray(nums, K);
-
-	printMaxSub(nums);
-
+	fun(a, n);
+	for(i = 0; i < n; i++)
+		printf("%d %s %d\n", a[i].num, a[i].name, a[i].score);
 	return 0;
 }
 
-struct MaxNumSub *maxSubArray(int *nums, int numsSize)
+int cmp(struct stu *a, struct stu *b)
 {
-	int pre = 0, maxAns = nums[0];
-	struct MaxNumSub *p = NULL;
-	numsMax = nums[0];
-	for(int i = 0; i < numsSize; i++) {
-		pre = fmax(pre + nums[i], nums[i]);
-		maxAns = fmax(maxAns, pre);
-		if(!(maxAns - pre)) {
-			if(numsMax < maxAns) {
-				numsMax = maxAns;
-			}
-			if(!i) {
-				head = p = newMaxSub(maxAns, i);
-			} else {
-				p->next = newMaxSub(maxAns, i);
-				p = p->next;
-			}
-		}
-	}
-
-	return head;
+	return a->score > b->score ? -1 : 1;
 }
 
-void printMaxSub(int *nums)
+void fun(struct stu *p, int n)
 {
-	struct MaxNumSub *p = head;
-	while(p != NULL) {
-		if(p->max == numsMax) {
-			printf("%d =", numsMax);
-			
-			printf("\n");
-		}
-		p = p->next;
-	}
-}
-
-struct MaxNumSub *newMaxSub(int maxAns, int subscript)
-{
-	struct MaxNumSub *new = malloc(sizeof(struct MaxNumSub));
-	new->max = maxAns;
-	new->firstSubscript = subscript;
-	new->lastSubscript = subscript;
-	new->next = NULL;
-
-	return new;
+	qsort(p, n, sizeof(struct stu), cmp);
 }
